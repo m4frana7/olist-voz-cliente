@@ -1,0 +1,58 @@
+{
+  "documentos": 42687,
+  "trechos": 42688,
+  "modelo_embeddings": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "arquivos_documentos": [
+    "documentos_00.jsonl",
+    "documentos_01.jsonl",
+    "documentos_02.jsonl",
+    "documentos_03.jsonl",
+    "documentos_04.jsonl",
+    "documentos_05.jsonl",
+    "documentos_06.jsonl",
+    "documentos_07.jsonl",
+    "documentos_08.jsonl",
+    "documentos_09.jsonl",
+    "documentos_10.jsonl"
+  ],
+  "arquivos_vetores": [
+    "vetores_00.npz",
+    "vetores_01.npz",
+    "vetores_02.npz",
+    "vetores_03.npz",
+    "vetores_04.npz",
+    "vetores_05.npz",
+    "vetores_06.npz"
+  ],
+  "sha256": {
+    "documentos_00.jsonl": "ce3180d15c543eb03dad8e8d803dabb99e9d27cded908d5fb792ca1b6b406608",
+    "documentos_01.jsonl": "f30a7fcce309ae03d4f371583a849eb8c3ead5a265c00931a768ca4bc24fd66a",
+    "documentos_02.jsonl": "5f1d7c4e233de5aba4d8c720fbe66238f7e0d6dc4ef333788cf67fe31bd58bf6",
+    "documentos_03.jsonl": "f6ee505a07517e3ab56ba0cd61881cb0159edcf24ce6f331081a867010794191",
+    "documentos_04.jsonl": "07b3164204416de32e4d6969a578574a5b7db792a0be849d9809ec7888ed8415",
+    "documentos_05.jsonl": "8bb4ecf75bd7e6276e98f4b1b67581c85ce600b47b77590e3463484a1a08ecdc",
+    "documentos_06.jsonl": "d39650b67b50eb2c01e16348914fd0a8268ae9292623b5ff236e6db0057bd6c1",
+    "documentos_07.jsonl": "a090f0043515ea12c5b143d557a799c3f490956ca0293c25318f18c1112de011",
+    "documentos_08.jsonl": "b7c1bc44f7af20260c8460036c7d6a3efa4346ad410f16c063c4ced70a422de4",
+    "documentos_09.jsonl": "229cec7d0490b6035b3dca672dd72a8592d265f834637d39716232a3b32a393c",
+    "documentos_10.jsonl": "7af9071a7b48425c652af3ce191040b704ab5708844ea21688a4df5c5f5f75de",
+    "vetores_00.npz": "82c59f02ba86e4ec650969085af7c32ed8a6bbf4934e5d1c2b8e2bec14c14d19",
+    "vetores_01.npz": "e10899454df53ca8cfbcf59f28c7d287f0524f1cc1d5337c67caaf71d355c927",
+    "vetores_02.npz": "fbd0def8476cec641a08feb04cb67f46747377010f799b6b9e3653d4dec2d53f",
+    "vetores_03.npz": "57a63363d3f12c393e2d2f7ed049e48b72f51165ceec7a528e43c99b068bf557",
+    "vetores_04.npz": "5e8360eec44e9ff0fdcbc263c0d3a21abc34095599a8da4df6b8d50619b6c94d",
+    "vetores_05.npz": "94a76f78b26b7664e57520415c227179cc7bcac8eaa1aecdfcbf167885d6c8dd",
+    "vetores_06.npz": "132b9e9d2fe501c8c9ae8efb70d6a13dc5359e4e97bf593a3702a3d4a6d5599f"
+  },
+  "fonte_indice": {
+    "modelo": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "corpus_sha256": "9c0ab7c4ad58d848f09795acd0f463bf569a311135372f98e0e2c22940f57953",
+    "documentos": 42687,
+    "trechos": 42688,
+    "documentos_sha256": "280f38c610a66542b6ca9a09dad689d9075f219b262b8c7894bae34428f0933b",
+    "vetores_sha256": "64111df9ac49f82f54843d200d69bb2b52399cca3be72df4b43cc255a03da87f",
+    "max_seq_length": 128,
+    "sobreposicao_tokens": 20
+  },
+  "precisao_vetores": "float32"
+}
