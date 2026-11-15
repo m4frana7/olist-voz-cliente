@@ -111,8 +111,22 @@ def chamar_groq(chave, modelo, mensagens, schema):
     except urllib.error.HTTPError as exc:
         if exc.code == 429:
             raise ErroServico('A cota ou o limite temporário da Groq foi atingido. Aguarde e tente depois. Nenhum outro serviço será usado.') from None
-        if exc.code in (401, 403):
-            raise ErroServico('A Groq não autorizou a chave. Confira os Secrets e a conta no plano Free.') from None
+        if exc.code == 401:
+            raise ErroServico('Groq HTTP 401: credencial inválida ou revogada. Atualize GROQ_API_KEY nos Secrets com uma chave ativa do projeto correto e reinicie a aplicação.') from None
+        if exc.code == 403:
+            # Exibir apenas diagnósticos conhecidos; nunca o corpo bruto ou a chave.
+            try:
+                erro = json.loads(exc.read(16384)).get('error', {})
+                codigo = erro.get('code') if isinstance(erro, dict) else None
+            except (ValueError, OSError, AttributeError):
+                codigo = None
+            if codigo == 'model_permission_blocked_org':
+                detalhe = 'Modelo bloqueado na organização. Confira Settings → Organization → Limits na Groq.'
+            elif codigo == 'model_permission_blocked_project':
+                detalhe = 'Modelo bloqueado no projeto da chave. Confira Settings → Projects → Limits na Groq.'
+            else:
+                detalhe = 'Acesso recusado pela Groq; a resposta não identificou um bloqueio de modelo conhecido. Confira o acesso da conta e do projeto; se persistir, consulte o suporte da Groq.'
+            raise ErroServico('Groq HTTP 403: ' + detalhe) from None
         raise ErroServico(f'O serviço de geração retornou HTTP {exc.code}. As avaliações continuam disponíveis abaixo.') from None
     except (OSError, ValueError) as exc:
         raise ErroServico('O serviço de geração está indisponível. As avaliações recuperadas continuam disponíveis.') from None
