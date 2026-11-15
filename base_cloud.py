@@ -104,7 +104,9 @@ def chamar_groq(chave, modelo, mensagens, schema):
             'name': 'olist_evidencias', 'strict': True, 'schema': schema}}}
     req = urllib.request.Request('https://api.groq.com/openai/v1/chat/completions',
         data=json.dumps(payload).encode('utf-8'),
-        headers={'Content-Type': 'application/json', 'Authorization': 'Bearer '+chave})
+        headers={'Content-Type': 'application/json', 'Accept': 'application/json',
+                 'User-Agent': 'OlistVoiceCustomer/1.0',
+                 'Authorization': 'Bearer '+chave})
     try:
         with urllib.request.urlopen(req, timeout=70) as r:
             dados = json.load(r)
@@ -115,8 +117,10 @@ def chamar_groq(chave, modelo, mensagens, schema):
             raise ErroServico('Groq HTTP 401: credencial inválida ou revogada. Atualize GROQ_API_KEY nos Secrets com uma chave ativa do projeto correto e reinicie a aplicação.') from None
         if exc.code == 403:
             # Exibir apenas diagnósticos conhecidos; nunca o corpo bruto ou a chave.
+            corpo = b''
             try:
-                erro = json.loads(exc.read(16384)).get('error', {})
+                corpo = exc.read(16384)
+                erro = json.loads(corpo).get('error', {})
                 codigo = erro.get('code') if isinstance(erro, dict) else None
             except (ValueError, OSError, AttributeError):
                 codigo = None
@@ -124,6 +128,8 @@ def chamar_groq(chave, modelo, mensagens, schema):
                 detalhe = 'Modelo bloqueado na organização. Confira Settings → Organization → Limits na Groq.'
             elif codigo == 'model_permission_blocked_project':
                 detalhe = 'Modelo bloqueado no projeto da chave. Confira Settings → Projects → Limits na Groq.'
+            elif b'1010' in corpo and b'error' in corpo.lower():
+                detalhe = 'O gateway recusou a identificação do cliente (erro 1010). Confirme que base_cloud.py foi atualizado e reinicie a aplicação. Se persistir, consulte o suporte da Groq.'
             else:
                 detalhe = 'Acesso recusado pela Groq; a resposta não identificou um bloqueio de modelo conhecido. Confira o acesso da conta e do projeto; se persistir, consulte o suporte da Groq.'
             raise ErroServico('Groq HTTP 403: ' + detalhe) from None
